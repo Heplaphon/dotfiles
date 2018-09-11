@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 #Variables
 #dotfiles_dir = pwd
 
@@ -6,4 +6,4 @@
 rm -rf ~/.vimrc > /dev/null 2>&1
 
 #Make Symlink
-ln -sf pwd/.vimrc   ~/.vimrc
+ln -sf ~/.dotfiles/.vimrc   ~/.vimrc
