@@ -27,6 +27,7 @@ nnoremap <C-H> <C-W><C-H>
 " Remaps
 map :Q :q
 map :W :w
+map :WQ :wq
 
 " Untested
 if empty(glob('~/.vim/autoload/plug.vim'))
