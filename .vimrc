@@ -3,7 +3,7 @@
 syntax enable
 set number
 set nowrap
-set mouse=a
+set mouse-=a
 set nocompatible
 set noshowmode
 set laststatus=2
@@ -39,6 +39,7 @@ endif
 call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-fugitive'                   " Git
     Plug 'junegunn/rainbow_parentheses.vim'     " Rainbow parentheses
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
     Plug 'w0rp/ale'                             " Syntax checking
     Plug 'kien/ctrlp.vim'                       " Fuzzy file search
     Plug 'scrooloose/nerdtree'                  " Tree-view file finding
@@ -49,6 +50,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'                   " Easily change around objects
     Plug 'SirVer/ultisnips'                     " Snippets
     Plug 'honza/vim-snippets'                   " Snippets library
+    Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+    Plug 'junegunn/fzf.vim'
 call plug#end()
 
 colorscheme gruvbox
@@ -80,3 +83,8 @@ let g:lightline = {
     \ },
     \ }
 
+" ==== YouCompleteMe
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ymc_extra_conf.py"
+let g:ycm_key_list_select_completion = []
+let g:ycm_key_list_previous_completion=[]
+let g:ycm_min_num_of_chars_for_completion = 1
