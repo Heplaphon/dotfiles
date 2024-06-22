@@ -1,6 +1,7 @@
 " Eirik Furuseth
 " .vimrc
 syntax enable
+set modelines=5
 set number
 set nowrap
 set mouse-=a
@@ -39,7 +40,6 @@ endif
 call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-fugitive'                   " Git
     Plug 'junegunn/rainbow_parentheses.vim'     " Rainbow parentheses
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
     Plug 'w0rp/ale'                             " Syntax checking
     Plug 'kien/ctrlp.vim'                       " Fuzzy file search
     Plug 'scrooloose/nerdtree'                  " Tree-view file finding
@@ -52,16 +52,30 @@ call plug#begin('~/.vim/plugged')
     Plug 'honza/vim-snippets'                   " Snippets library
     Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
     Plug 'junegunn/fzf.vim'
+    Plug 'gryf/kickass-syntax-vim'
+    Plug 'airblade/vim-rooter'
+    Plug 'liuchengxu/vim-which-key'
+    Plug 'AckslD/nvim-whichkey-setup.lua'
 call plug#end()
 
 colorscheme gruvbox
+
+" ==== Vim which key
+let g:mapleader = "\<Space>"
+let g:maplocalleader = ','
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+
+
+" ==== VimRooter
+let g:rooter_patterns = ['.git', 'Makefile']
 
 " ==== Easymotion
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 nmap f <Plug>(easymotion-s2)
 " nmap / <Plug>(easymotion-sn)
-nmap <space> <Plug>(easymotion-sn)
+" nmap <space> <Plug>(easymotion-sn)
 
 
 " ==== NERDTREE
