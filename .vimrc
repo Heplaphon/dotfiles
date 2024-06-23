@@ -56,9 +56,14 @@ call plug#begin('~/.vim/plugged')
     Plug 'airblade/vim-rooter'
     Plug 'liuchengxu/vim-which-key'
     Plug 'AckslD/nvim-whichkey-setup.lua'
+    Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+    Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 call plug#end()
 
 colorscheme gruvbox
+
+" ==== Deoplete
+let g:deoplete#enable_at_startup = 1
 
 " ==== Vim which key
 let g:mapleader = "\<Space>"

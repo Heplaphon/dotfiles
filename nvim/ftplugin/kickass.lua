@@ -13,5 +13,3 @@ local keymap = {
 
 wk.register_keymap('leader', keymap)
 
-print("TEST")
-
