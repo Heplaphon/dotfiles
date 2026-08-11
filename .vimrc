@@ -14,6 +14,7 @@ set background=dark
 set shiftwidth=4
 set shiftround      " Indents are rounded to nearest shiftwidth
 set softtabstop=4
+set tabstop=4
 set expandtab
 set smarttab
 set autoindent
@@ -40,7 +41,7 @@ endif
 call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-fugitive'                   " Git
     Plug 'junegunn/rainbow_parentheses.vim'     " Rainbow parentheses
-    Plug 'w0rp/ale'                             " Syntax checking
+    Plug 'w0rp/ale', has('nvim') ? { 'on': [] } : {}                             " Syntax checking
     Plug 'kien/ctrlp.vim'                       " Fuzzy file search
     Plug 'scrooloose/nerdtree'                  " Tree-view file finding
     Plug 'itchyny/lightline.vim'                " Modeline
@@ -55,17 +56,24 @@ call plug#begin('~/.vim/plugged')
     Plug 'gryf/kickass-syntax-vim'
     Plug 'airblade/vim-rooter'
     Plug 'liuchengxu/vim-which-key'
-    Plug 'AckslD/nvim-whichkey-setup.lua'
-    Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
-    Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+    Plug 'AckslD/nvim-whichkey-setup.lua', has('nvim') ? {} : { 'on': [] }
+    " Plug 'ms-jpq/coq_nvim', has('nvim') ? {'branch': 'coq'} : { 'on': [], 'branch': 'coq' }
+    " Plug 'ms-jpq/coq.artifacts', has('nvim') ? {'branch': 'artifacts'} : { 'on': [], 'branch': 'artifacts' }
+    Plug 'saghen/blink.cmp', has('nvim') ? { 'tag': 'v1.*' } : { 'on': [],  'tag': 'v1.*'  }
+    Plug 'rafamadriz/friendly-snippets'
+    Plug 'neovim/nvim-lspconfig', has('nvim') ? {} : { 'on': [] }
+    Plug 'nvim-lua/plenary.nvim', has('nvim') ? {} : { 'on': [] }
+    Plug 'nvim-telescope/telescope.nvim', has('nvim') ? { 'tag': '0.1.8' } : { 'on': [], 'tag': '0.1.8' }
+    Plug 'jceb/vim-orgmode'
+    Plug 'kdheepak/lazygit.nvim', has('nvim') ? {} : { 'on': [] }
 call plug#end()
 
 colorscheme gruvbox
 
 " ==== Deoplete
-let g:deoplete#enable_at_startup = 1
 
 " ==== Vim which key
+set timeoutlen=500
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>

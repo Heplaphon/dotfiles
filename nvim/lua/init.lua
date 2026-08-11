@@ -1,5 +1,23 @@
 local wk = require('whichkey_setup')
-print("CONFIG")
+local o = vim.o
+
+o.expandtab = true
+
+require('blink.cmp').setup({
+  keymap = { preset = 'enter' },
+  appearance = {
+    nerd_font_variant = 'mono'
+  },
+  completion = {
+    documentation = { auto_show = false }
+  },
+  sources = {
+    default = { 'lsp', 'path', 'snippets', 'buffer' },
+  },
+  fuzzy = {
+    implementation = "prefer_rust_with_warning"
+  }
+})
 
 require("whichkey_setup").config{
     hide_statusline = false,
@@ -25,13 +43,14 @@ local keymap = {
             h = {'<Cmd>Telescope command_history<CR>', 'history'},
         },
         q = {'<Cmd>Telescope quickfix<CR>', 'quickfix'},
-        g = {
-            name = '+git',
-            g = {'<Cmd>Telescope git_commits<CR>', 'commits'},
-            c = {'<Cmd>Telescope git_bcommits<CR>', 'bcommits'},
-            b = {'<Cmd>Telescope git_branches<CR>', 'branches'},
-            s = {'<Cmd>Telescope git_status<CR>', 'status'},
-        },
+        g = {'<Cmd>Telescope live_grep<CR>', 'grep curr dir'}
+    },
+    g = {
+        name = '+git',
+        g = {'<Cmd>Telescope git_commits<CR>', 'commits'},
+        c = {'<Cmd>Telescope git_bcommits<CR>', 'bcommits'},
+        b = {'<Cmd>Telescope git_branches<CR>', 'branches'},
+        s = {'<Cmd>Telescope git_status<CR>', 'status'},
     }
 }
 
