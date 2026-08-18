@@ -1,8 +1,0 @@
--- vim.lsp.enable("gopls")
--- settingsvim.lsp.config("gopls", {
---     settings = {
---         gopls = {
---             semanticTokens = true,
---         }
---     }
--- })
