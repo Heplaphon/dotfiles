@@ -55,7 +55,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/fzf.vim'
     Plug 'gryf/kickass-syntax-vim'
     Plug 'airblade/vim-rooter'
-    Plug 'liuchengxu/vim-which-key'
+    Plug 'folke/which-key.nvim', has('nvim') ? {} : { 'on': [] }
     Plug 'AckslD/nvim-whichkey-setup.lua', has('nvim') ? {} : { 'on': [] }
     " Plug 'ms-jpq/coq_nvim', has('nvim') ? {'branch': 'coq'} : { 'on': [], 'branch': 'coq' }
     " Plug 'ms-jpq/coq.artifacts', has('nvim') ? {'branch': 'artifacts'} : { 'on': [], 'branch': 'artifacts' }
