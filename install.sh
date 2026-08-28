@@ -11,4 +11,5 @@ echo "$SCRIPT_DIR"
 ln -sf "$SCRIPT_DIR/.tmux.conf" ~/.tmux.conf
 ln -sf "$SCRIPT_DIR/.vimrc" ~/.vimrc
 ln -sf "$SCRIPT_DIR/nvim" ~/.config/nvim
+ln -sf "$SCRIPT_DIR/emacs" ~/.config/emacs
 

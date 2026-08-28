@@ -1,0 +1,8 @@
+*.elc
+
+# --- Package manager --- 
+/emacs/elpaca/
+
+# --- Runtime and history caches ---
+/emacs/auto-save-list/
+/emacs/eln-cache/
