@@ -79,26 +79,57 @@
 ;; TAB key: fix indentation if needed, otherwise perform completion
 (setq tab-always-indent 'complete)
 
-(use-package corfu
-  :ensure t
-  :hook (after-init . global-corfu-mode)
-  :custom
-  (corfu-cycle t) ; cycle around to first entry after reaching the last
-  (corfu-preview-current nil) ; don't expand text at point until I press return
-  (corfu-min-width 20)
-  (corfu-on-exact-match 'insert) ; complete if there is only a single candidate
-  (corfu-quit-no-match t)
-  (corfu-quit-at-boundary t)
-  :config
-  (setq corfu-popupinfo-delay '(1.25 . 0.5))
-  (corfu-popupinfo-mode 1) ; shows documentation next to completions
+;(use-package corfu
+;  :ensure t
+;  :hook (after-init . global-corfu-mode)
+;  :custom
+;  (corfu-cycle t) ; cycle around to first entry after reaching the last
+;  (corfu-preview-current nil) ; don't expand text at point until I press return
+;  (corfu-min-width 20)
+;  (corfu-on-exact-match 'insert) ; complete if there is only a single candidate
+;  (corfu-quit-no-match t)
+;  (corfu-quit-at-boundary t)
+;  :config
+;  (setq corfu-popupinfo-delay '(1.25 . 0.5))
+;  (corfu-popupinfo-mode 1) ; shows documentation next to completions
 
   ;; sort by input history
-  (with-eval-after-load 'savehist
-    (corfu-history-mode 1)
-    (add-to-list 'savehist-additional-variables 'corfu-history))
-  )
+;  (with-eval-after-load 'savehist
+;    (corfu-history-mode 1)
+;    (add-to-list 'savehist-additional-variables 'corfu-history))
+					;  )
+(use-package corfu
+  :ensure t
+  :bind (:map corfu-map
+         ("TAB" . corfu-next)
+         ([tab] . corfu-next)
+         ("S-TAB" . corfu-previous)
+         ([backtab] . corfu-previous))
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-prefix 1)
+  :init
+  (global-corfu-mode))
 
+;;; Treesitter language highlighting
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+(use-package eglot
+  :ensure nil ; Built-in in Emacs 29+
+  :hook
+  ;; Enable Eglot automatically when entering a tree-sitter major mode
+  ((python-ts-mode . eglot-ensure)
+    (go-ts-mode . eglot-ensure)
+    (bash-ts-mode . eglot-ensure)
+    (typescript-ts-mode . eglot-ensure)
+    (js-ts-mode . eglot-ensure)))
 
 ;;; Magit and transient
 (elpaca (transient :branch "main"))
@@ -106,10 +137,10 @@
   :ensure t)
 
 ;;; Sublimity
-(use-package sublimity
-  :ensure t
-  :config
-  (sublimity-mode 1))
+;(use-package sublimity
+;  :ensure t
+;  :config
+;  (sublimity-mode 1))
 
 ;;; Projectile
 (use-package projectile
