@@ -56,6 +56,9 @@
 (setq which-key-idle-delay 0.01)
 (which-key-mode 1)
 
+(use-package track-changes
+  :ensure t)
+
 ;;; Theme
 (use-package gruvbox-theme
   :ensure t
@@ -98,19 +101,93 @@
 ;    (corfu-history-mode 1)
 ;    (add-to-list 'savehist-additional-variables 'corfu-history))
 					;  )
+
+(use-package savehist
+  :init
+  (savehist-mode 1))
+
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode 1)
+  :custom
+  (vertico-cycle t)) ; Allow cycling from last candidate back to first
+
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode 1))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
+
+(use-package prescient
+  :ensure t
+  :config
+  (prescient-persist-mode 1)) ; Save sorting histories across restarts
+
+(use-package vertico-prescient
+  :ensure t
+  :after (vertico prescient)
+  :init
+  (vertico-prescient-mode 1))
+
+(use-package consult
+  :ensure t
+  :bind (;; Better buffer/file switching with live previews
+         ("C-x b" . consult-buffer)
+         ;; Multi-buffer or single-buffer fast text search
+         ("M-s l" . consult-line)
+         ("M-s g" . consult-ripgrep)
+         ;; Modernized jump tools
+         ("M-g g" . consult-goto-line)
+         ("M-g i" . consult-imenu)))
+
+(use-package embark
+  :ensure t
+  :bind (("C-." . embark-act)         ; Keyboard "right-click" context menu
+         ("M-." . embark-dwim))        ; Do What I Mean (context-aware jump)
+  :init
+  ;; Replace the default prefix help with an interactive Embark version
+  (setq prefix-help-command #'embark-prefix-help))
+
+(use-package embark-consult
+  :ensure t
+  :after (embark consult)
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
+
 (use-package corfu
   :ensure t
   :bind (:map corfu-map
          ("TAB" . corfu-next)
          ([tab] . corfu-next)
          ("S-TAB" . corfu-previous)
-         ([backtab] . corfu-previous))
+         ([backtab] . corfu-previous)
+	 ([escape] . corfu-quit))
   :custom
   (corfu-cycle t)
   (corfu-auto t)
   (corfu-auto-prefix 1)
   :init
   (global-corfu-mode))
+
+(use-package corfu-prescient
+  :ensure t
+  :after (corfu prescient)
+  :init
+  (corfu-prescient-mode 1))
+
+(use-package cape
+  :ensure t
+  :init
+  ;; Add useful backend extensions to the default Capf (Completion-at-point) hook
+  (add-hook 'completion-at-point-functions #'cape-file)      ; Path completions
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)   ; Buffer word completions
+  (add-hook 'completion-at-point-functions #'cape-keyword))  ; Programming keywords
 
 ;;; Treesitter language highlighting
 (use-package treesit-auto
@@ -142,12 +219,54 @@
 ;  :config
 ;  (sublimity-mode 1))
 
+;; Perspective
+(use-package perspective
+  :ensure t
+  :init
+  (persp-mode 1)
+  :custom
+  ;; Set your preferred prefix key (e.g., C-c p or C-x x)
+  (persp-mode-prefix-key (kbd "C-c s")))
+
 ;;; Projectile
 (use-package projectile
   :ensure t
   :config
   (projectile-mode +1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
+;; Treemacs
+(use-package treemacs
+  :ensure t
+  :defer t
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t M-t" . treemacs-find-user-tab)
+        ("C-x t G"   . treemacs-user-git-action)))
+
+(use-package treemacs-projectile
+  :ensure t
+  :after (treemacs projectile))
+
+(use-package treemacs-perspective
+  :ensure t
+  :after (treemacs perspective)
+  :config
+  (treemacs-set-scope-type 'Perspectives))
+
+;; Copilot
+(use-package copilot
+  :after track-changes
+  :ensure t)
+
+;; Ace window, better window movements
+(use-package ace-window
+  :ensure t
+  :bind (("M-o" . ace-window)))
 
 ;;; Enable smooth, line-by-line scrolling in terminal/TTY
 (setq scroll-step 1)
